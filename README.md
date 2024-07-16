@@ -9,3 +9,4 @@ EduConnect is a platform that enhances communication and collaboration between p
 - Student Progress Tracking: Monitor grades and activities.
 
 EduConnect aims to support student success and well-being through improved parental involvement and streamlined communication.
+mongodb://127.0.0.1:27017/parental-dashboard'

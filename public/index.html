@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <title>Login</title>
+</head>
+<body>
+    <div class="login-container">
+        <div class="form">
+          <h2>Log In</h2>
+          <form class="login-form" id="loginForm">
+            <input type="email" placeholder="Email" id="email" name="email" required/>
+            <input type="password" placeholder="Password" id="password" name="password" required/>
+            <label for="role">Role</label>
+            <select id="role" name="role" required>
+                <option value="parent">Parent</option>
+                <option value="teacher">Teacher</option>
+                <option value="admin">Admin</option>
+            </select>
+            <button type="submit">Login</button>
+          </form>
+        </div>
+      </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+    
+            fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password, role })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Login successful!');
+                    // localStorage.setItem('token', data.token);
+                    window.location.href = `/dashboard?token=${data.token}`;
+                    
+                } else {
+                    alert('Login failed: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+        
+    </script>
+    
+</body>
+</html>
